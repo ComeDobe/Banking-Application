@@ -49,10 +49,21 @@ public class User extends AbstractEntity implements UserDetails {
   @OneToOne
   private Role role;
 
+//  @Override
+//  public Collection<? extends GrantedAuthority> getAuthorities() {
+//    return Collections.singletonList(new SimpleGrantedAuthority(role.getName()));
+//  }
+
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return Collections.singletonList(new SimpleGrantedAuthority(role.getName()));
+    if (role != null) {
+      return Collections.singletonList(new SimpleGrantedAuthority(role.getName()));
+    } else {
+      return Collections.emptyList();
+      // return Collections.singletonList(new SimpleGrantedAuthority("ROLE_DEFAULT"));
+    }
   }
+
 
   @Override
   public String getUsername() {
